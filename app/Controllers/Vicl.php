@@ -14,6 +14,13 @@ class Vicl extends BaseController{
         
     }
     
+    public function getSupprimer($id)
+    {
+        Vehicule::where('id', $id)->first();
+        $vehic = Vehicule::find($id);
+        $vehic->delete();
+        return redirect()->to(base_url());
+    }
     
     
 }

@@ -10,7 +10,12 @@ use App\Models\Reservation;
 class Admin extends BaseController
 {    
     public function postLogin()
+    
+    
     {
+        $data['lesvehicules'] = Vehicule::all();
+        
+        
         $login = $this->request->getPost('login');
         $pwd = $this->request->getPost('pwd');
         
@@ -25,12 +30,14 @@ class Admin extends BaseController
             if($users->count()==0 ){
                 //pas de user : précaution
                 session()->destroy();
-                return redirect()->to('/accueil');
+                
             } else {
                 //client
                 session()->set('connect','client');
                 session()->set('id',$users[0]->id);
-                
+                return view('template/header')
+                     . view('accueil', $data)
+                     . view('template/footer');
                 
             }
             
@@ -38,6 +45,9 @@ class Admin extends BaseController
             //admin
             session()->set('connect','admin');
             session()->set('id',$users[0]->id);
+            return view('template/headeradmin')
+                     . view('accueil_admin', $data)
+                     . view('template/footeradmin');
             
             
         }
@@ -48,15 +58,10 @@ class Admin extends BaseController
                    'admin'=> true
                 );
             $session->set($sessiondata);
-            return redirect()->to('/accueil');
+           
         
         
-
-        $data['titre'] = "Bienvenue sur ProdIgniter";
-        $data['soustitre'] = "Saisie invalide";
-        return view('template/header')
-             . view('user_login',$data)
-             . view('template/footer');
+        
     }
     
     public function getLog()
@@ -66,4 +71,15 @@ class Admin extends BaseController
              . view('user_login')
              . view('template/footer');
     }
+    
+    public function getLogout()
+    {
+        $session = session();
+        $session->destroy();
+        $data['titre'] = "Bienvenue sur AutoSell";
+                return view('template/header')
+                     . view('user_login',$data)
+                     . view('template/footer');
+    }
+    
 }
