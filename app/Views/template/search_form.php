@@ -4,7 +4,7 @@
         <div class="row mb-4">
             <div class="col-md-12">
                 <h2>Rechercher un véhicule</h2>
-                <form id="searchForm" method="POST" action="<?php echo site_url('vicl/recherche'); ?>">
+                <form id="searchForm" method="POST" action="<?php echo site_url('vicl/search'); ?>">
                     <div class="row">
                         <div class="col-md-3 mb-3">
                             <input type="text" class="form-control" name="marque" placeholder="Marque">
