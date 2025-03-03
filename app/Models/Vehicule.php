@@ -14,5 +14,6 @@ class Vehicule extends Model
     
     public function vehicules() {
         return $this->hasMany('App\Models\Reservation'); 
+        
     }
 }

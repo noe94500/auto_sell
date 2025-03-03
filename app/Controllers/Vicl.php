@@ -23,43 +23,46 @@ class Vicl extends BaseController{
     }
     
     
-    public function postSearch() {
+    public function getSearch()
+    {
+        $vehiculeModel = new Vehicule();
+        $query = $vehiculeModel;
+
         // Récupérer les filtres de la requête
-        $marque = $this->input->get('marque');
-        $modele = $this->input->get('modele');
-        $carburant = $this->input->get('carburant');
-        $annee = $this->input->get('annee');
-        $etat = $this->input->get('etat');
-        $nombre_de_place = $this->input->get('nombre_de_place');
+        $marque = $this->request->getGet('marque');
+        $modele = $this->request->getGet('modele');
+        $carburant = $this->request->getGet('carburant');
+        $annee = $this->request->getGet('annee');
+        $etat = $this->request->getGet('etat');
+        $nb_place = $this->request->getGet('nb_place');
 
-        // Initialiser la requête Eloquent
-        $query = Vehicle::query();
-
-        // Appliquer les filtres
-        if ($marque) {
-            $query->where('marque', $marque);
+        // Appliquer les filtres dynamiquement
+        if (!empty($marque)) {
+            $query = $query->where('marque', $marque);
         }
-        if ($modele) {
-            $query->where('modele', $modele);
+        if (!empty($modele)) {
+            $query = $query->where('modele', $modele);
         }
-        if ($carburant) {
-            $query->where('carburant', $carburant);
+        if (!empty($carburant)) {
+            $query = $query->where('carburant', $carburant);
         }
-        if ($annee) {
-            $query->where('annee', $annee);
+        if (!empty($annee)) {
+            $query = $query->where('annee', $annee);
         }
-        if ($etat) {
-            $query->where('etat', $etat);
+        if (!empty($etat)) {
+            $query = $query->where('etat', $etat);
         }
-        if ($nombre_de_place) {
-            $query->where('nombre_de_place', $nombre_de_place);
+        if (!empty($nb_place)) {
+            $query = $query->where('nombre_de_place', $nb_place);
         }
 
-        // Exécuter la requête et récupérer les résultats
+        // Récupérer les résultats avec findAll()
         $vehicles = $query->get();
 
-        // Passer les résultats à la vue
-        $this->load->view('vehicle_search_results', ['vehicles' => $vehicles]);
+        // Retourner la vue avec les résultats
+        return view('template/header.php')
+             . view('resultat_recherche.php', ['vehicles' => $vehicles])
+             . view('template/footer.php');
     }
     
 }

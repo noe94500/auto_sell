@@ -1,6 +1,6 @@
 <!-- application/views/vehicle_search.php -->
 
-<form action="<?php echo site_url('vehicle/search'); ?>" method="get">
+<form action="<?php echo site_url('Vicl/search'); ?>" method="get">
     <label for="marque">Marque:</label>
     <input type="text" id="marque" name="marque"><br>
 
@@ -22,7 +22,6 @@
     <input type="submit" value="Search">
 </form>
 
-<!-- Afficher les résultats -->
 <?php if (isset($vehicles)): ?>
     <ul>
         <?php foreach ($vehicles as $vehicle): ?>
